@@ -1,3 +1,5 @@
+require 'logger'
+
 module Ec2spec
   class Client
     META_DATA_INSTANCE_TYPE_URL = 'http://169.254.169.254/latest/meta-data/instance-type'
@@ -12,6 +14,8 @@ module Ec2spec
     }
 
     def initialize(hosts)
+      @log = Logger.new(STDOUT)
+      @log.level = Logger::INFO
       @hosts = hosts
     end
 
@@ -29,6 +33,8 @@ module Ec2spec
     private
 
     def exec_host_result(host, backend)
+      @log.info("Started: #{host.host}")
+
       begin
         host.instance_type = instance_type(backend)
         host.instance_id   = instance_id(backend)
@@ -36,6 +42,8 @@ module Ec2spec
       rescue Errno::ECONNREFUSED
         host.na_values
       end
+
+      @log.info("Finished: #{host.host}")
       host
     end
 
