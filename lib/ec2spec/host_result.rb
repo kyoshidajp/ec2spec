@@ -1,13 +1,15 @@
 module Ec2spec
   class HostResult
+    MONTH_OF_DAYS = 31
     NA_VALUE = 'N/A'
 
     attr_accessor :host, :backend, :instance_id, :instance_type,
                   :memory, :cpu, :price_per_unit
 
-    def initialize(host)
+    def initialize(host, days = nil)
       @host = host
       @backend = nil
+      @days = days || MONTH_OF_DAYS
     end
 
     def na_values
@@ -32,7 +34,7 @@ module Ec2spec
 
     def price_per_month
       return NA_VALUE if @price_per_unit == NA_VALUE
-      @price_per_unit * 24 * 31
+      @price_per_unit * 24 * @days
     end
   end
 end

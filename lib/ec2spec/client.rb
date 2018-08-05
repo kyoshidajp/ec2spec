@@ -14,10 +14,12 @@ module Ec2spec
       'price (USD/M)' => :price_per_month,
     }
 
-    def initialize(hosts)
+    def initialize(hosts, days)
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
+
       @hosts = hosts
+      @days = days
     end
 
     def run
@@ -80,7 +82,7 @@ module Ec2spec
         host: ssh_options[:host_name],
         ssh_options: ssh_options,
       )
-      host = Ec2spec::HostResult.new(host_name)
+      host = Ec2spec::HostResult.new(host_name, @days)
       host.backend = backend
       host
     end
