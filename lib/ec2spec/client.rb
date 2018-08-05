@@ -29,9 +29,13 @@ module Ec2spec
     private
 
     def exec_host_result(host, backend)
-      host.instance_type = instance_type(backend)
-      host.instance_id   = instance_id(backend)
-      host.memory = memory(backend)
+      begin
+        host.instance_type = instance_type(backend)
+        host.instance_id   = instance_id(backend)
+        host.memory = memory(backend)
+      rescue Errno::ECONNREFUSED
+        host.na_values
+      end
       host
     end
 
