@@ -2,8 +2,9 @@ require 'logger'
 
 module Ec2spec
   class Client
-    META_DATA_INSTANCE_TYPE_URL = 'http://169.254.169.254/latest/meta-data/instance-type'
-    META_DATA_INSTANCE_ID_URL   = 'http://169.254.169.254/latest/meta-data/instance-id'
+    META_DATA_URL_BASE = 'http://169.254.169.254/latest/meta-data/'
+    META_DATA_INSTANCE_TYPE_PATH = '/instance-type'
+    META_DATA_INSTANCE_ID_PATH   = '/instance-id'
 
     TABLE_LABEL_WITH_METHODS = {
       'instance_type' => :instance_type,
@@ -57,12 +58,16 @@ module Ec2spec
       cmd_result.stdout
     end
 
+    def metadata_url(path)
+      "#{META_DATA_URL_BASE}#{path}"
+    end
+
     def instance_type_cmd
-      "curl #{META_DATA_INSTANCE_TYPE_URL}"
+      "curl -s #{metadata_url(META_DATA_INSTANCE_TYPE_PATH)}"
     end
 
     def instance_id_cmd
-      "curl #{META_DATA_INSTANCE_ID_URL}"
+      "curl -s #{metadata_url(META_DATA_INSTANCE_ID_PATH)}"
     end
 
     def memory(backend)
