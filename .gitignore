@@ -1,4 +1,5 @@
-/.bundle/
+/.bundle
+/vendor/bundle/
 /.idea/
 /.yardoc
 /_yardoc/
