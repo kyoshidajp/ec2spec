@@ -15,20 +15,21 @@ module Ec2spec
     def price_per_unit
       sku_instance_type = sku
       on_demand = offer_file_json['terms']['OnDemand']
-      price_dimensions = on_demand[sku_instance_type].first[1]['priceDimensions']
+      sku_value = on_demand[sku_instance_type].first[1]
+      price_dimensions = sku_value['priceDimensions']
       price_dimensions.first[1]['pricePerUnit']['USD'].to_f
     end
 
     private
 
     def offer_file_json
-      download unless File.exists?(offer_file_path)
+      download unless File.exist?(offer_file_path)
       @offer_file_json ||= JSON.parse(File.open(offer_file_path).read)
     end
 
     def offer_file_path
       price_list_dir = File.join(ENV['HOME'], OFFER_FILE_DIR)
-      Dir.mkdir(price_list_dir) unless Dir.exists?(price_list_dir)
+      Dir.mkdir(price_list_dir) unless Dir.exist?(price_list_dir)
       File.join(price_list_dir, OFFER_FILE_NAME)
     end
 
@@ -42,8 +43,10 @@ module Ec2spec
 
     def sku
       products = offer_file_json['products']
-      product = products.find { |product| product?(product, @instance_type) }
-      product[1]['sku']
+      target_product = products.find do |product|
+        product?(product, @instance_type)
+      end
+      target_product[1]['sku']
     end
 
     def product?(product, instance_type)

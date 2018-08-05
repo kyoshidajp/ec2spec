@@ -1,14 +1,14 @@
 module Ec2spec
-
   class HostResult
-    attr_reader :host, :backend, :instance_type, :memory, :cpu, :price_per_unit
+    attr_accessor :host, :backend, :instance_id, :instance_type,
+                  :memory, :cpu, :price_per_unit
 
     def initialize(host)
       @host = host
-    end
-
-    def backend=(value)
-      @backend = value
+      @backend = nil
+      @instance_id = nil
+      @memory = nil
+      @cpu = nil
     end
 
     def instance_type=(value)
@@ -16,14 +16,6 @@ module Ec2spec
 
       @offer_file = Ec2spec::OfferFile.new(value)
       price_per_unit
-    end
-
-    def memory=(value)
-      @memory = value
-    end
-
-    def cpu=(value)
-      @cpu = value
     end
 
     def price_per_unit

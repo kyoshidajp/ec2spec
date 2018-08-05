@@ -4,7 +4,6 @@ module Ec2spec
       @instance_type = instance_type
     end
 
-    def price_per_unit
-    end
+    def price_per_unit; end
   end
 end
