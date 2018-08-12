@@ -3,8 +3,9 @@ module Ec2spec
     MONTH_OF_DAYS = 31
     NA_VALUE = 'N/A'
 
-    attr_accessor :host, :backend, :instance_id, :instance_type,
-                  :memory, :cpu, :price_per_unit
+    attr_accessor :host, :backend, :instance_id, :memory, :cpu
+    attr_reader :instance_type
+    attr_writer :price_per_unit
 
     def initialize(host, days = nil)
       @host = host
