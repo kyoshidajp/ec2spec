@@ -2,7 +2,7 @@ require 'thor'
 
 module Ec2spec
   class CLI < Thor
-    desc 'ssh host ...', ''
+    desc 'ssh -h host1 ...', 'Compare the specifications of EC2 instances.'
     option 'host', aliases: 'h', type: :array, equired: true
     option 'days', type: :numeric
     def ssh

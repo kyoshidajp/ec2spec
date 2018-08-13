@@ -1,34 +1,38 @@
 # ec2spec
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ec2spec`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+ec2spec is a simple comparison tool for Amazon EC2 Instances.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'ec2spec'
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install ec2spec
+$ gem install ec2spec
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+$ ec2spec ssh -h host1 host2 host3
+```
 
-## Development
+```
+I, [2018-08-12T20:54:25.814752 #64341]  INFO -- : Started: host1
+I, [2018-08-12T20:54:25.814835 #64341]  INFO -- : Started: host2
+I, [2018-08-12T20:54:25.814867 #64341]  INFO -- : Started: host3
+I, [2018-08-12T20:54:25.826113 #64341]  INFO -- : Finished: host3
+I, [2018-08-12T20:54:29.385848 #64341]  INFO -- : Finished: host1
+I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
++---------------+-------------+-------------+-------+
+|               | host1       | host2       | host3 |
++---------------+-------------+-------------|-------+
+| instance_type |    t2.micro |  c4.2xlarge |   N/A |
+|   instance_id |  i-xxxxxxxx |  i-yyyyyyyy |   N/A |
+|        memory |   1016324kB |  15395932kB |   N/A |
+| price (USD/H) |      0.0152 |       0.504 |   N/A |
+| price (USD/M) |     11.3088 |     374.976 |   N/A |
++---------------+-------------+---------------------+
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+The data of `host3` could not be acquired due to some error.
 
 ## Contributing
 
