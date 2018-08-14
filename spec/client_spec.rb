@@ -8,6 +8,10 @@ RSpec.describe Ec2spec::Client do
       expect(Ec2spec::Client.new(['host1'], 30, 'json'))
         .to be_an_instance_of Ec2spec::Client
     end
+    it 'accepts hash format' do
+      expect(Ec2spec::Client.new(['host1'], 30, 'hash'))
+        .to be_an_instance_of Ec2spec::Client
+    end
     it 'does not accept other format' do
       expect { Ec2spec::Client.new(['host1'], 30, 'xml') }
         .to raise_error Ec2spec::UndefineFormatterError
