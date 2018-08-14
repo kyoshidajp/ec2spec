@@ -3,7 +3,7 @@ module Ec2spec
     MONTH_OF_DAYS = 31
     NA_VALUE = 'N/A'
 
-    TABLE_LABEL_WITH_METHODS = {
+    LABEL_WITH_METHODS = {
       'instance_type' => :instance_type,
       'instance_id'   => :instance_id,
       'memory'        => :memory,
@@ -53,7 +53,7 @@ module Ec2spec
     private
 
     def host_values
-      TABLE_LABEL_WITH_METHODS.each_with_object({}) do |(k, v), hash|
+      LABEL_WITH_METHODS.each_with_object({}) do |(k, v), hash|
         hash[k] = public_send(v)
       end
     end

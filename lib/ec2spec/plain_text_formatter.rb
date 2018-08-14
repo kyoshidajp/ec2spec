@@ -14,7 +14,7 @@ module Ec2spec
     end
 
     def table_rows(results)
-      Ec2spec::HostResult::TABLE_LABEL_WITH_METHODS
+      Ec2spec::HostResult::LABEL_WITH_METHODS
         .each_with_object([]) do |(k, v), row|
         row << [k].concat(results.map(&v))
       end
