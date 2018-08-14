@@ -13,14 +13,6 @@ module Ec2spec
       json: JsonFormatter,
     }
 
-    TABLE_LABEL_WITH_METHODS = {
-      'instance_type' => :instance_type,
-      'instance_id'   => :instance_id,
-      'memory'        => :memory,
-      'price (USD/H)' => :price_per_unit,
-      'price (USD/M)' => :price_per_month,
-    }
-
     def initialize(hosts, days, format)
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
@@ -39,8 +31,8 @@ module Ec2spec
           exec_host_result(host, backend)
         end
       end
-      @results = threads.each(&:join)
-      output(@results, @hosts)
+      results = threads.each(&:join).map(&:value)
+      output(results, @hosts)
     end
 
     private

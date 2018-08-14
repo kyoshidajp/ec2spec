@@ -1,7 +1,6 @@
 module Ec2spec
   module PlainTextFormatter
     def output(results, hosts)
-      results = results.map(&:value)
       table = Terminal::Table.new
       table.headings = table_header(results)
       table.rows = table_rows(results)
@@ -15,7 +14,8 @@ module Ec2spec
     end
 
     def table_rows(results)
-      Ec2spec::Client::TABLE_LABEL_WITH_METHODS.each_with_object([]) do |(k, v), row|
+      Ec2spec::HostResult::TABLE_LABEL_WITH_METHODS
+        .each_with_object([]) do |(k, v), row|
         row << [k].concat(results.map(&v))
       end
     end

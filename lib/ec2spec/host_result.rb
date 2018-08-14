@@ -3,6 +3,14 @@ module Ec2spec
     MONTH_OF_DAYS = 31
     NA_VALUE = 'N/A'
 
+    TABLE_LABEL_WITH_METHODS = {
+      'instance_type' => :instance_type,
+      'instance_id'   => :instance_id,
+      'memory'        => :memory,
+      'price (USD/H)' => :price_per_unit,
+      'price (USD/M)' => :price_per_month,
+    }
+
     attr_accessor :host, :backend, :instance_id, :memory, :cpu
     attr_reader :instance_type
     attr_writer :price_per_unit
@@ -36,6 +44,18 @@ module Ec2spec
     def price_per_month
       return NA_VALUE if @price_per_unit == NA_VALUE
       @price_per_unit * 24 * @days
+    end
+
+    def to_hash
+      host_values
+    end
+
+    private
+
+    def host_values
+      TABLE_LABEL_WITH_METHODS.each_with_object({}) do |(k, v), hash|
+        hash[k] = public_send(v)
+      end
     end
   end
 end
