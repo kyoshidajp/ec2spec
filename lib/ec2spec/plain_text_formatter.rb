@@ -7,7 +7,7 @@ module Ec2spec
       table.rows = table_rows(results)
       column_count = hosts.size + 1
       column_count.times { |i| table.align_column(i, :right) }
-      puts table
+      table
     end
 
     def table_header(results)

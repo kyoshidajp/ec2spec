@@ -9,7 +9,7 @@ module Ec2spec
         values = host_values(result)
         hash[host] = values
       end
-      puts result_hash.to_json
+      result_hash.to_json
     end
 
     def host_values(result)

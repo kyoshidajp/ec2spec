@@ -11,7 +11,7 @@ module Ec2spec
       days = options['days']
       format = options['format'] || :plain_text
       client = Ec2spec::Client.new(hosts, days, format)
-      client.run
+      puts client.run
     end
   end
 end
