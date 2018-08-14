@@ -47,8 +47,7 @@ module Ec2spec
       end
 
       raise UndefineFormatterError unless OUTPUT_FORMATTERS.key?(format_sym)
-      formatter = OUTPUT_FORMATTERS[format_sym]
-      extend formatter
+      extend OUTPUT_FORMATTERS[format_sym]
     end
 
     def exec_host_result(host, backend)
