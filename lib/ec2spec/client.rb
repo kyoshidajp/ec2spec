@@ -1,10 +1,17 @@
 require 'logger'
+require 'ec2spec/json_formatter'
+require 'ec2spec/plain_text_formatter'
 
 module Ec2spec
   class Client
     META_DATA_URL_BASE = 'http://169.254.169.254/latest/meta-data/'
     META_DATA_INSTANCE_TYPE_PATH = '/instance-type'
     META_DATA_INSTANCE_ID_PATH   = '/instance-id'
+
+    OUTPUT_FORMATTERS = {
+      plain_text: PlainTextFormatter,
+      json: JsonFormatter,
+    }
 
     TABLE_LABEL_WITH_METHODS = {
       'instance_type' => :instance_type,
@@ -14,12 +21,15 @@ module Ec2spec
       'price (USD/M)' => :price_per_month,
     }
 
-    def initialize(hosts, days)
+    def initialize(hosts, days, format)
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
 
       @hosts = hosts
       @days = days
+
+      formatter = OUTPUT_FORMATTERS[format.to_sym]
+      extend formatter
     end
 
     def run
@@ -30,7 +40,7 @@ module Ec2spec
         end
       end
       @results = threads.each(&:join)
-      output
+      output(@results, @hosts)
     end
 
     private
@@ -85,26 +95,6 @@ module Ec2spec
       host = Ec2spec::HostResult.new(host_name, @days)
       host.backend = backend
       host
-    end
-
-    def output
-      results = @results.map(&:value)
-      table = Terminal::Table.new
-      table.headings = table_header(results)
-      table.rows = table_rows(results)
-      column_count = @hosts.size + 1
-      column_count.times { |i| table.align_column(i, :right) }
-      puts table
-    end
-
-    def table_header(results)
-      [''].concat(results.map(&:host))
-    end
-
-    def table_rows(results)
-      TABLE_LABEL_WITH_METHODS.each_with_object([]) do |(k, v), row|
-        row << [k].concat(results.map(&v))
-      end
     end
   end
 end
