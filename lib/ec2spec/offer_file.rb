@@ -1,14 +1,10 @@
-require 'json'
-require 'faraday'
-
 module Ec2spec
   class OfferFile
-    OFFER_FILE_URL  = 'https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20180802021534/ap-northeast-1/index.json'
     OFFER_FILE_NAME = 'price_list.json'
-    OFFER_FILE_DIR  = '.ec2spec'
 
-    def initialize(instance_type)
+    def initialize(instance_type, region)
       @instance_type = instance_type
+      @region = region
       @offer_file_json = nil
     end
 
@@ -28,7 +24,7 @@ module Ec2spec
     end
 
     def offer_file_path
-      price_list_dir = File.join(ENV['HOME'], OFFER_FILE_DIR)
+      price_list_dir = File.join(ENV['HOME'], Const::PROJECT_DIR)
       Dir.mkdir(price_list_dir) unless Dir.exist?(price_list_dir)
       File.join(price_list_dir, OFFER_FILE_NAME)
     end
@@ -37,7 +33,10 @@ module Ec2spec
       http_conn = Faraday.new do |builder|
         builder.adapter Faraday.default_adapter
       end
-      response = http_conn.get(OFFER_FILE_URL)
+
+      offer_file_index_file = OfferIndexFile.new
+      offer_file_url = offer_file_index_file.offer_file_url(@region)
+      response = http_conn.get(offer_file_url)
       File.open(offer_file_path, 'wb') { |fp| fp.write(response.body) }
     end
 
