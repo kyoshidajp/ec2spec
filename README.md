@@ -17,6 +17,25 @@ $ gem install ec2spec
 ## Usage
 
 ```
+$ ec2spec ssh -h host1 ... [options]
+```
+
+### Options
+
+```
+-h, --host    Target hostnames.
+
+--days        How many days per one month.
+
+--format      Output format (default: plain_text).
+              plain_text, json, hash
+
+--region      Region of EC2 (default: ap-northeast-1).
+```
+
+### Example
+
+```
 $ ec2spec ssh -h host1 host2 host3
 ```
 
