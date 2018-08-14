@@ -1,6 +1,7 @@
 # ec2spec
 
 [![Gem Version](https://badge.fury.io/rb/ec2spec.svg)](https://badge.fury.io/rb/ec2spec)
+[![Build Status](https://travis-ci.org/kyoshidajp/ec2spec.svg?branch=master)](https://travis-ci.org/kyoshidajp/ec2spec)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
 
 [license]: https://github.com/kyoshidajp/ec2spec/blob/master/LICENSE
