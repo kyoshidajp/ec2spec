@@ -5,11 +5,13 @@ module Ec2spec
     desc 'ssh -h host1 ...', 'Compare the specifications of EC2 instances.'
     option 'host', aliases: 'h', type: :array, equired: true
     option 'days', type: :numeric
+    option 'format'
     def ssh
       hosts = options['host']
       days = options['days']
-      client = Ec2spec::Client.new(hosts, days)
-      client.run
+      format = options['format'] || :plain_text
+      client = Ec2spec::Client.new(hosts, days, format)
+      puts client.run
     end
   end
 end

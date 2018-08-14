@@ -1,25 +1,31 @@
 require 'logger'
+require 'ec2spec/json_formatter'
+require 'ec2spec/plain_text_formatter'
+require 'ec2spec/hash_formatter'
 
 module Ec2spec
+  class UndefineFormatterError < StandardError; end
+
   class Client
     META_DATA_URL_BASE = 'http://169.254.169.254/latest/meta-data/'
     META_DATA_INSTANCE_TYPE_PATH = '/instance-type'
     META_DATA_INSTANCE_ID_PATH   = '/instance-id'
 
-    TABLE_LABEL_WITH_METHODS = {
-      'instance_type' => :instance_type,
-      'instance_id'   => :instance_id,
-      'memory'        => :memory,
-      'price (USD/H)' => :price_per_unit,
-      'price (USD/M)' => :price_per_month,
+    OUTPUT_FORMATTERS = {
+      plain_text: PlainTextFormatter,
+      json: JsonFormatter,
+      hash: HashFormatter,
     }
 
-    def initialize(hosts, days)
+    def initialize(hosts, days, format)
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
 
       @hosts = hosts
       @days = days
+      @format = format
+
+      extend_formatter
     end
 
     def run
@@ -29,11 +35,22 @@ module Ec2spec
           exec_host_result(host, backend)
         end
       end
-      @results = threads.each(&:join)
-      output
+      results = threads.each(&:join).map(&:value)
+      output(results, @hosts)
     end
 
     private
+
+    def extend_formatter
+      format_sym = begin
+        @format.to_sym
+      rescue NoMethodError
+        raise UndefineFormatterError
+      end
+
+      raise UndefineFormatterError unless OUTPUT_FORMATTERS.key?(format_sym)
+      extend OUTPUT_FORMATTERS[format_sym]
+    end
 
     def exec_host_result(host, backend)
       @log.info("Started: #{host.host}")
@@ -85,26 +102,6 @@ module Ec2spec
       host = Ec2spec::HostResult.new(host_name, @days)
       host.backend = backend
       host
-    end
-
-    def output
-      results = @results.map(&:value)
-      table = Terminal::Table.new
-      table.headings = table_header(results)
-      table.rows = table_rows(results)
-      column_count = @hosts.size + 1
-      column_count.times { |i| table.align_column(i, :right) }
-      puts table
-    end
-
-    def table_header(results)
-      [''].concat(results.map(&:host))
-    end
-
-    def table_rows(results)
-      TABLE_LABEL_WITH_METHODS.each_with_object([]) do |(k, v), row|
-        row << [k].concat(results.map(&v))
-      end
     end
   end
 end
