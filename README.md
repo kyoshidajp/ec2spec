@@ -55,6 +55,10 @@ I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 => {"host1":{"instance_type":"t2.micro","instance_id":"i-xxxxxxxx","memory":"1016324kB","price (USD/H)":0.152,"price (USD/M)":11.3088},"host2":{"instance_type":"c4.2xlarge","instance_id":"i-yyyyyyyy","memory":"15395932kB","price (USD/H)":0.504,"price (USD/M)":374.976}}
 ```
 
+## Requirement
+
+- Ruby(MRI) 2.3.0 or higher
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/kyoshidajp/ec2spec.
