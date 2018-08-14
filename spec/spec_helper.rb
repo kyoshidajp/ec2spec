@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'ec2spec'
+require 'ec2spec/client'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

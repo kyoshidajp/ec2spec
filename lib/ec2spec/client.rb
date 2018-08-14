@@ -3,6 +3,8 @@ require 'ec2spec/json_formatter'
 require 'ec2spec/plain_text_formatter'
 
 module Ec2spec
+  class UndefineFormatterError < StandardError; end
+
   class Client
     META_DATA_URL_BASE = 'http://169.254.169.254/latest/meta-data/'
     META_DATA_INSTANCE_TYPE_PATH = '/instance-type'
@@ -19,9 +21,9 @@ module Ec2spec
 
       @hosts = hosts
       @days = days
+      @format = format
 
-      formatter = OUTPUT_FORMATTERS[format.to_sym]
-      extend formatter
+      extend_formatter
     end
 
     def run
@@ -36,6 +38,18 @@ module Ec2spec
     end
 
     private
+
+    def extend_formatter
+      format_sym = begin
+        @format.to_sym
+      rescue NoMethodError
+        raise UndefineFormatterError
+      end
+
+      raise UndefineFormatterError unless OUTPUT_FORMATTERS.key?(format_sym)
+      formatter = OUTPUT_FORMATTERS[format_sym]
+      extend formatter
+    end
 
     def exec_host_result(host, backend)
       @log.info("Started: #{host.host}")
