@@ -24,6 +24,7 @@ module Ec2spec
       @region = region
 
       extend_formatter
+      OfferFile.instance.prepare(@region)
     end
 
     def run
