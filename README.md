@@ -23,7 +23,7 @@ $ ec2spec ssh -h host1 ... [options]
 ### Options
 
 ```
--h, --host    Target hostnames.
+-h, --host    Target host names.
 
 --days        How many days per one month.
 
@@ -31,6 +31,8 @@ $ ec2spec ssh -h host1 ... [options]
               plain_text, json, hash
 
 --region      Region of EC2 (default: ap-northeast-1).
+
+--debug       Output logs as DEBUG level.
 ```
 
 ### Example

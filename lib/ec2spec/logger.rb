@@ -5,6 +5,6 @@ module Ec2spec
   @logger.level = Logger::INFO
 
   class << self
-    attr_reader :logger
+    attr_accessor :logger
   end
 end
