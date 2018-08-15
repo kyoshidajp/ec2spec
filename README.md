@@ -6,7 +6,19 @@
 
 [license]: https://github.com/kyoshidajp/ec2spec/blob/master/LICENSE
 
-ec2spec is a simple comparison tool for Amazon EC2 Instances.
+ec2spec is a simple comparison tool for Amazon EC2 Instances you can access.
+
+Supports the following items.
+
+| item     | from    |
+| :------- | :------ |
+| instance type | host |
+| instance id | host |
+| vCPU | AWS Price List API |
+| memory | AWS Price List API |
+| price | AWS Price List API |
+
+The target host must be accessible from the machine. Also, only On-Demand way and Linux machine.
 
 ## Installation
 
@@ -23,7 +35,7 @@ $ ec2spec ssh -h host1 ... [options]
 ### Options
 
 ```
--h, --host    Target host names.
+-h, --host    Target hosts name.
 
 --days        How many days per one month.
 
@@ -80,6 +92,11 @@ I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 ## Requirement
 
 - Ruby(MRI) 2.3.0 or higher
+
+## Competitors
+
+- [Amazon Web Services Simple Monthly Calculator](https://calculator.s3.amazonaws.com/index.html)
+- [Amazon EC2 Instance Comparison](https://www.ec2instances.info/)
 
 ## Contributing
 
