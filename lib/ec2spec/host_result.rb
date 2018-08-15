@@ -6,12 +6,13 @@ module Ec2spec
     LABEL_WITH_METHODS = {
       'instance_type' => :instance_type,
       'instance_id'   => :instance_id,
+      'vCPU'          => :vcpu,
       'memory'        => :memory,
       'price (USD/H)' => :price_per_unit,
       'price (USD/M)' => :price_per_month,
     }
 
-    attr_accessor :host, :backend, :instance_id, :memory, :cpu
+    attr_accessor :host, :backend, :instance_id, :cpu
     attr_reader :instance_type
     attr_writer :price_per_unit
 
@@ -35,6 +36,16 @@ module Ec2spec
 
       return if value == NA_VALUE
       price_per_unit
+    end
+
+    def vcpu
+      @vcpu ||=
+        Ec2spec::OfferFile.instance.vcpu(@instance_type)
+    end
+
+    def memory
+      @memory ||=
+        Ec2spec::OfferFile.instance.memory(@instance_type)
     end
 
     def price_per_unit
