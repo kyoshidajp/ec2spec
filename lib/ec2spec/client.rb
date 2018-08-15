@@ -10,6 +10,7 @@ module Ec2spec
     META_DATA_URL_BASE = 'http://169.254.169.254/latest/meta-data/'
     META_DATA_INSTANCE_TYPE_PATH = '/instance-type'
     META_DATA_INSTANCE_ID_PATH   = '/instance-id'
+    DEFAULT_REGION = 'ap-northeast-1'
 
     OUTPUT_FORMATTERS = {
       plain_text: PlainTextFormatter,
@@ -17,13 +18,14 @@ module Ec2spec
       hash: HashFormatter,
     }
 
-    def initialize(hosts, days, format)
+    def initialize(hosts, days, format, region = DEFAULT_REGION)
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
 
       @hosts = hosts
       @days = days
       @format = format
+      @region = region
 
       extend_formatter
     end
@@ -99,7 +101,7 @@ module Ec2spec
         host: ssh_options[:host_name],
         ssh_options: ssh_options,
       )
-      host = Ec2spec::HostResult.new(host_name, @days)
+      host = Ec2spec::HostResult.new(@region, host_name, @days)
       host.backend = backend
       host
     end

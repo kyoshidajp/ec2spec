@@ -15,7 +15,8 @@ module Ec2spec
     attr_reader :instance_type
     attr_writer :price_per_unit
 
-    def initialize(host, days = nil)
+    def initialize(region, host, days = nil)
+      @region = region
       @host = host
       @backend = nil
       @days = days || MONTH_OF_DAYS
@@ -33,7 +34,7 @@ module Ec2spec
       @instance_type = value
 
       return if value == NA_VALUE
-      @offer_file = Ec2spec::OfferFile.new(value)
+      @offer_file = Ec2spec::OfferFile.new(value, @region)
       price_per_unit
     end
 

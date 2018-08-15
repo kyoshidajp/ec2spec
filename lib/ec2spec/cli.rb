@@ -6,11 +6,13 @@ module Ec2spec
     option 'host', aliases: 'h', type: :array, equired: true
     option 'days', type: :numeric
     option 'format'
+    option 'region'
     def ssh
       hosts = options['host']
       days = options['days']
       format = options['format'] || :plain_text
-      client = Ec2spec::Client.new(hosts, days, format)
+      region = options['region'] || 'ap-northeast-1'
+      client = Ec2spec::Client.new(hosts, days, format, region)
       puts client.run
     end
   end
