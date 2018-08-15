@@ -57,7 +57,6 @@ module Ec2spec
       begin
         host.instance_type = instance_type(backend)
         host.instance_id   = instance_id(backend)
-        host.memory = memory(backend)
       rescue Errno::ECONNREFUSED
         host.na_values
       end
@@ -86,10 +85,6 @@ module Ec2spec
 
     def instance_id_cmd
       "curl -s #{metadata_url(META_DATA_INSTANCE_ID_PATH)}"
-    end
-
-    def memory(backend)
-      Specinfra::HostInventory::Memory.new(backend.host_inventory).get['total']
     end
 
     def target(host_name)

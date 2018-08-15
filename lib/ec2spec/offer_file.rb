@@ -18,6 +18,22 @@ module Ec2spec
       end
     end
 
+    def products
+      offer_file_json['products']
+    end
+
+    def vcpu(instance_type)
+      sku_instance_type = sku(instance_type)
+      product = products[sku_instance_type]['attributes']
+      product['vcpu']
+    end
+
+    def memory(instance_type)
+      sku_instance_type = sku(instance_type)
+      product = products[sku_instance_type]['attributes']
+      product['memory']
+    end
+
     def price_per_unit(instance_type)
       sku_instance_type = sku(instance_type)
       on_demand = offer_file_json['terms']['OnDemand']
@@ -49,7 +65,6 @@ module Ec2spec
     end
 
     def sku(instance_type)
-      products = offer_file_json['products']
       target_product = products.find do |product|
         product?(product, instance_type)
       end

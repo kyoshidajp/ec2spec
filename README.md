@@ -53,7 +53,8 @@ I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 +---------------+-------------+-------------|-------+
 | instance_type |    t2.micro |  c4.2xlarge |   N/A |
 |   instance_id |  i-xxxxxxxx |  i-yyyyyyyy |   N/A |
-|        memory |   1016324kB |  15395932kB |   N/A |
+|          vCPU |           1 |           8 |   N/A |
+|        memory |       1 GiB |      15 GiB |   N/A |
 | price (USD/H) |      0.0152 |       0.504 |   N/A |
 | price (USD/M) |     11.3088 |     374.976 |   N/A |
 +---------------+-------------+---------------------+
@@ -73,7 +74,7 @@ I, [2018-08-12T20:54:25.814752 #64341]  INFO -- : Started: host1
 I, [2018-08-12T20:54:25.814835 #64341]  INFO -- : Started: host2
 I, [2018-08-12T20:54:29.385848 #64341]  INFO -- : Finished: host1
 I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
-=> {"host1":{"instance_type":"t2.micro","instance_id":"i-xxxxxxxx","memory":"1016324kB","price (USD/H)":0.152,"price (USD/M)":11.3088},"host2":{"instance_type":"c4.2xlarge","instance_id":"i-yyyyyyyy","memory":"15395932kB","price (USD/H)":0.504,"price (USD/M)":374.976}}
+=> {"host1":{"instance_type":"t2.micro","instance_id":"i-xxxxxxxx","vCPU":"1","memory":"1 GiB","price (USD/H)":0.152,"price (USD/M)":11.3088},"host2":{"instance_type":"c4.2xlarge","instance_id":"i-yyyyyyyy","vCPU":"8","memory":"15 GiB","price (USD/H)":0.504,"price (USD/M)":374.976}}
 ```
 
 ## Requirement
