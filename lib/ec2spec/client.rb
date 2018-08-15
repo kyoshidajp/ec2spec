@@ -1,4 +1,3 @@
-require 'logger'
 require 'ec2spec/json_formatter'
 require 'ec2spec/plain_text_formatter'
 require 'ec2spec/hash_formatter'
@@ -19,15 +18,13 @@ module Ec2spec
     }
 
     def initialize(hosts, days, format, region = DEFAULT_REGION)
-      @log = Logger.new(STDOUT)
-      @log.level = Logger::INFO
-
       @hosts = hosts
       @days = days
       @format = format
       @region = region
 
       extend_formatter
+      OfferFile.instance.prepare(@region)
     end
 
     def run
@@ -55,7 +52,7 @@ module Ec2spec
     end
 
     def exec_host_result(host, backend)
-      @log.info("Started: #{host.host}")
+      Ec2spec.logger.info("Started: #{host.host}")
 
       begin
         host.instance_type = instance_type(backend)
@@ -65,7 +62,7 @@ module Ec2spec
         host.na_values
       end
 
-      @log.info("Finished: #{host.host}")
+      Ec2spec.logger.info("Finished: #{host.host}")
       host
     end
 

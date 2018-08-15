@@ -34,12 +34,12 @@ module Ec2spec
       @instance_type = value
 
       return if value == NA_VALUE
-      @offer_file = Ec2spec::OfferFile.new(value, @region)
       price_per_unit
     end
 
     def price_per_unit
-      @price_per_unit ||= @offer_file.price_per_unit
+      @price_per_unit ||=
+        Ec2spec::OfferFile.instance.price_per_unit(@instance_type)
     end
 
     def price_per_month

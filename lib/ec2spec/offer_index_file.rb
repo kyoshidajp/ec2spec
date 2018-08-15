@@ -1,15 +1,15 @@
+require 'singleton'
+
 module Ec2spec
   class OfferIndexFile
+    include Singleton
+
     REGION_INDEX_FILE_URL = 'https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/current/region_index.json'
 
-    def initialize
-      @offer_index_file_json = nil
-
+    def offer_file_url(region)
       mkdir_project_dir
       offer_index_file_json
-    end
 
-    def offer_file_url(region)
       file_path = @offer_index_file_json['regions'][region]['currentVersionUrl']
       parsed_url = URI.parse(REGION_INDEX_FILE_URL)
       parsed_url.path = file_path
@@ -36,7 +36,15 @@ module Ec2spec
     end
 
     def offer_index_file_json
-      download_region_index_file unless File.exist?(offer_index_file_path)
+      if File.exist?(offer_index_file_path)
+        Ec2spec.logger.debug('Read from cached offer index file')
+      else
+        Ec2spec.logger.info('Downloading: offer index file')
+        download_region_index_file
+        Ec2spec.logger
+               .info("Downloaded: offer index file (#{offer_index_file_path})")
+      end
+
       @offer_index_file_json ||=
         JSON.parse(File.open(offer_index_file_path).read)
     end
