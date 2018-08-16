@@ -1,6 +1,7 @@
 require 'ec2spec/json_formatter'
 require 'ec2spec/plain_text_formatter'
 require 'ec2spec/hash_formatter'
+require 'ec2spec/slack_formatter'
 
 module Ec2spec
   class UndefineFormatterError < StandardError; end
@@ -13,8 +14,9 @@ module Ec2spec
 
     OUTPUT_FORMATTERS = {
       plain_text: PlainTextFormatter,
-      json: JsonFormatter,
-      hash: HashFormatter,
+      json:       JsonFormatter,
+      hash:       HashFormatter,
+      slack:      SlackFormatter,
     }
 
     CONNECTION_ERROR_WITH_MESSAGES = {
