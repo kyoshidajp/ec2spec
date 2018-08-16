@@ -17,6 +17,12 @@ module Ec2spec
       hash: HashFormatter,
     }
 
+    CONNECTION_ERROR_WITH_MESSAGES = {
+      Errno::ECONNREFUSED         => 'Connection refused: %{host}',
+      Net::SSH::ConnectionTimeout => 'Connection timeout: %{host}',
+      StandardError               => 'Unknown error: %{host}',
+    }
+
     def initialize(hosts, days, format, region = DEFAULT_REGION)
       @hosts = hosts
       @days = days
@@ -51,17 +57,19 @@ module Ec2spec
       extend OUTPUT_FORMATTERS[format_sym]
     end
 
+    def host_result(host, backend)
+      Ec2spec.logger.info("Finished: #{host.host}")
+      host.instance_type = instance_type(backend)
+      host.instance_id   = instance_id(backend)
+    rescue *CONNECTION_ERROR_WITH_MESSAGES.keys => e
+      message = format(CONNECTION_ERROR_WITH_MESSAGES[e.class], host: host.host)
+      Ec2spec.logger.error(message)
+      host.na_values
+    end
+
     def exec_host_result(host, backend)
       Ec2spec.logger.info("Started: #{host.host}")
-
-      begin
-        host.instance_type = instance_type(backend)
-        host.instance_id   = instance_id(backend)
-      rescue Errno::ECONNREFUSED
-        host.na_values
-      end
-
-      Ec2spec.logger.info("Finished: #{host.host}")
+      host_result(host, backend)
       host
     end
 
