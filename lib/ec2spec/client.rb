@@ -1,4 +1,5 @@
 require 'ec2spec/json_formatter'
+require 'ec2spec/markdown_formatter'
 require 'ec2spec/plain_text_formatter'
 require 'ec2spec/hash_formatter'
 require 'ec2spec/slack_formatter'
@@ -17,6 +18,7 @@ module Ec2spec
       json:       JsonFormatter,
       hash:       HashFormatter,
       slack:      SlackFormatter,
+      markdown:   MarkdownFormatter,
     }
 
     CONNECTION_ERROR_WITH_MESSAGES = {

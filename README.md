@@ -40,7 +40,7 @@ $ ec2spec ssh -h host1 ... [options]
 --days        How many days per one month.
 
 --format      Output format (default: plain_text).
-              plain_text, json, hash, slack
+              plain_text, json, hash, slack, markdown
 
 --region      Region of EC2 (default: ap-northeast-1).
 
