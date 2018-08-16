@@ -4,11 +4,11 @@ require 'ec2spec/version'
 Gem::Specification.new do |spec|
   spec.name          = 'ec2spec'
   spec.version       = Ec2spec::VERSION
-  spec.authors       = %w[Katsuhiko YOSHIDA]
+  spec.authors       = %w["Katsuhiko YOSHIDA"]
   spec.email         = %w[claddvd@gmail.com]
 
-  spec.summary       = 'Write a short summary, because RubyGems requires one.'
-  spec.description   = 'Write a longer description or delete this line.'
+  spec.description   = 'ec2spec is a simple comparison tool for Amazon EC2 Instances you can access.'
+  spec.summary       = spec.description
   spec.homepage      = 'https://github.com/kyoshidajp/ec2spec'
   spec.license       = 'MIT'
 
