@@ -37,6 +37,14 @@ module Ec2spec
       OfferFile.instance.prepare(@region)
     end
 
+    def dollar_exchange_rate(rate)
+      PriceCalculator.instance.dollar_exchange_rate = rate
+    end
+
+    def currency_unit(unit)
+      PriceCalculator.instance.currency_unit = unit
+    end
+
     def run
       hosts = @hosts.map { |host| target(host) }
       threads = hosts.map do |host|

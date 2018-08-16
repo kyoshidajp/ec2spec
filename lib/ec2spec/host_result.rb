@@ -16,6 +16,15 @@ module Ec2spec
     attr_reader :instance_type
     attr_writer :price_per_unit, :vcpu
 
+    def self.label_with_methods
+      label_methods = LABEL_WITH_METHODS
+      if PriceCalculator.instance.currency_values?
+        label_methods['price (%s/H)'] = :price_per_currency_unit
+        label_methods['price (%s/M)'] = :price_per_currency_unit_month
+      end
+      label_methods
+    end
+
     def initialize(region, host, days = nil)
       @region = region
       @host = host
@@ -53,9 +62,22 @@ module Ec2spec
         Ec2spec::OfferFile.instance.price_per_unit(@instance_type)
     end
 
+    def price_per_currency_unit
+      return @price_per_currency_unit unless @price_per_currency_unit.nil?
+
+      dollar_price = Ec2spec::OfferFile.instance.price_per_unit(@instance_type)
+      @price_per_currency_unit = PriceCalculator
+                                 .instance.currency_unit_price(dollar_price)
+    end
+
     def price_per_month
       return NA_VALUE if @price_per_unit == NA_VALUE
       @price_per_unit * 24 * @days
+    end
+
+    def price_per_currency_unit_month
+      return NA_VALUE if @price_per_currency_unit == NA_VALUE
+      @price_per_currency_unit * 24 * @days
     end
 
     def to_hash
@@ -65,8 +87,10 @@ module Ec2spec
     private
 
     def host_values
-      LABEL_WITH_METHODS.each_with_object({}) do |(k, v), hash|
-        hash[k] = public_send(v)
+      label_with_methods.each_with_object({}) do |(k, v), hash|
+        unit = PriceCalculator.instance.currency_unit
+        label = format(k, unit)
+        hash[label] = public_send(v)
       end
     end
   end

@@ -1,9 +1,22 @@
+require 'singleton'
+
 module Ec2spec
   class PriceCalculator
-    def initialize(instance_type)
-      @instance_type = instance_type
+    include Singleton
+
+    attr_accessor :currency_unit, :dollar_exchange_rate
+
+    def initialize
+      @currency_unit = nil
+      @dollar_exchange_rate = nil
     end
 
-    def price_per_unit; end
+    def currency_unit_price(dollar_price)
+      dollar_price.to_f * @dollar_exchange_rate.to_f
+    end
+
+    def currency_values?
+      !(@currency_unit.nil? || @dollar_exchange_rate.nil?)
+    end
   end
 end
