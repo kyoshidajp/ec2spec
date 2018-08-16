@@ -32,28 +32,10 @@ $ gem install ec2spec
 $ ec2spec ssh -h host1 ... [options]
 ```
 
-### Options
-
-```
--h, --host    Target hosts name.
-
---days        How many days per one month.
-
---format      Output format (default: plain_text).
-              plain_text, json, hash, slack, markdown
-
---region      Region of EC2 (default: ap-northeast-1).
-
---debug       Output logs as DEBUG level.
-```
-
 ### Example
 
 ```
 $ ec2spec ssh -h host1 host2 host3
-```
-
-```
 I, [2018-08-12T20:54:25.814752 #64341]  INFO -- : Started: host1
 I, [2018-08-12T20:54:25.814835 #64341]  INFO -- : Started: host2
 I, [2018-08-12T20:54:25.814867 #64341]  INFO -- : Started: host3
@@ -73,6 +55,72 @@ I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 ```
 
 The data of `host3` could not be acquired due to a connection refused error.
+
+### Options
+
+```
+-h, --host    Target hosts name.
+
+--days        How many days per one month.
+
+--format      Output format (default: plain_text).
+              plain_text, json, hash, slack, markdown
+
+--region      Region of EC2 (default: ap-northeast-1).
+
+--debug       Output logs as DEBUG level.
+```
+
+#### --format (`plain_text`)
+
+```
++---------------+-------------+-------------+
+|               | host1       | host2       |
++---------------+-------------+-------------|
+| instance_type |    t2.micro |  c4.2xlarge |
+|   instance_id |  i-xxxxxxxx |  i-yyyyyyyy |
+|          vCPU |           1 |           8 |
+|        memory |       1 GiB |      15 GiB |
+| price (USD/H) |      0.0152 |       0.504 |
+| price (USD/M) |     11.3088 |     374.976 |
++---------------+-------------+-------------+
+```
+
+#### --format (`json` and `hash`)
+
+```
+{"host1":{"instance_type":"t2.micro","instance_id":"i-xxxxxxxx","vCPU":"1","memory":"1 GiB","price (USD/H)":0.0152,"price (USD/M)":11.3088},"host2":{"instance_type":"c4.2xlarge","instance_id":"i-yyyyyyyy","vCPU":"8","memory":"15 GiB","price (USD/H)":0.504,"price (USD/M)":374.976}}
+```
+
+#### --format (`slack`)
+
+````
+```
++---------------+-------------+-------------+
+|               | host1       | host2       |
++---------------+-------------+-------------+
+| instance_type |    t2.micro |  c4.2xlarge |
+|   instance_id |  i-xxxxxxxx |  i-yyyyyyyy |
+|          vCPU |           1 |           8 |
+|        memory |       1 GiB |      15 GiB |
+| price (USD/H) |      0.0152 |       0.504 |
+| price (USD/M) |     11.3088 |     374.976 |
++---------------+-------------+-------------+
+```
+````
+
+#### --format (`markdown`)
+
+```
+|               | stg-bastion | worker1     |
+|---------------|-------------|-------------|
+| instance_type |    t2.micro |  c4.2xlarge |
+|   instance_id |  i-xxxxxxxx |  i-yyyyyyyy |
+|          vCPU |           1 |           8 |
+|        memory |       1 GiB |      15 GiB |
+| price (USD/H) |      0.0152 |       0.504 |
+| price (USD/M) |     11.3088 |     374.976 |
+```
 
 ## As a library
 
