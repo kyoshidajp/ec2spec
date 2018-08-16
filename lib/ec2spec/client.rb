@@ -1,8 +1,8 @@
-require 'ec2spec/json_formatter'
-require 'ec2spec/markdown_formatter'
-require 'ec2spec/plain_text_formatter'
-require 'ec2spec/hash_formatter'
-require 'ec2spec/slack_formatter'
+require 'ec2spec/formatter/json_formatter'
+require 'ec2spec/formatter/markdown_formatter'
+require 'ec2spec/formatter/plain_text_formatter'
+require 'ec2spec/formatter/hash_formatter'
+require 'ec2spec/formatter/slack_formatter'
 
 module Ec2spec
   class UndefineFormatterError < StandardError; end
@@ -14,11 +14,11 @@ module Ec2spec
     DEFAULT_REGION = 'ap-northeast-1'
 
     OUTPUT_FORMATTERS = {
-      plain_text: PlainTextFormatter,
-      json:       JsonFormatter,
-      hash:       HashFormatter,
-      slack:      SlackFormatter,
-      markdown:   MarkdownFormatter,
+      plain_text: Formatter::PlainTextFormatter,
+      json:       Formatter::JsonFormatter,
+      hash:       Formatter::HashFormatter,
+      slack:      Formatter::SlackFormatter,
+      markdown:   Formatter::MarkdownFormatter,
     }
 
     CONNECTION_ERROR_WITH_MESSAGES = {
