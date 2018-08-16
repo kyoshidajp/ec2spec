@@ -30,10 +30,8 @@ module Ec2spec
 
       extend_calc
 
-      if calc_type == :api
-        raise ApiKeyError if !app_id.nil?
-        prepare_exchange_api(app_id)
-      end
+      raise ApiKeyError if calc_type == :api && !app_id.nil?
+      prepare_exchange_api(app_id) if calc_type == :api
     end
 
     def currency_values?

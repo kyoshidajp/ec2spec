@@ -20,11 +20,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'faraday'
+  spec.add_dependency 'money'
+  spec.add_dependency 'money-open-exchange-rates'
   spec.add_dependency 'specinfra'
   spec.add_dependency 'terminal-table'
   spec.add_dependency 'thor'
-  spec.add_dependency 'money'
-  spec.add_dependency 'money-open-exchange-rates'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
