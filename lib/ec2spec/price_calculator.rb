@@ -3,11 +3,11 @@ require 'ec2spec/calculator/api_price_calculator'
 require 'ec2spec/calculator/manual_price_calculator'
 
 module Ec2spec
+  class UndefinedCalcError < StandardError; end
+  class ApiKeyError < StandardError; end
+
   class PriceCalculator
     include Singleton
-
-    class UndefinedCalcError < StandardError; end
-    class ApiKeyError < StandardError; end
 
     attr_accessor :currency_unit, :dollar_exchange_rate
 
@@ -30,8 +30,9 @@ module Ec2spec
 
       extend_calc
 
-      raise ApiKeyError if calc_type == :api && !app_id.nil?
+      raise ApiKeyError if calc_type_sym == :api && app_id.nil?
       prepare_exchange_api(app_id) if calc_type == :api
+      self
     end
 
     def currency_values?
@@ -41,15 +42,15 @@ module Ec2spec
     private
 
     def extend_calc
-      calc_type_sym = begin
-        @calc_type.to_sym
-      rescue NoMethodError
-        raise UndefinedCalcError
-      end
-
       raise UndefinedCalcError unless PRICE_CALCULATORS.key?(calc_type_sym)
       extend PRICE_CALCULATORS[calc_type_sym]
       Ec2spec.logger.debug("Calculate price: #{@calc_type}")
+    end
+
+    def calc_type_sym
+      @calc_type.to_sym
+    rescue NoMethodError
+      raise UndefinedCalcError
     end
   end
 end
