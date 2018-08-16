@@ -12,9 +12,9 @@ module Ec2spec
       'price (USD/M)' => :price_per_month,
     }
 
-    attr_accessor :host, :backend, :instance_id, :cpu
+    attr_accessor :host, :backend, :instance_id
     attr_reader :instance_type
-    attr_writer :price_per_unit
+    attr_writer :price_per_unit, :vcpu
 
     def initialize(region, host, days = nil)
       @region = region
@@ -27,7 +27,7 @@ module Ec2spec
       @instance_type = NA_VALUE
       @instance_id = NA_VALUE
       @memory = NA_VALUE
-      @cpu = NA_VALUE
+      @vcpu = NA_VALUE
       @price_per_unit = NA_VALUE
     end
 

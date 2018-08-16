@@ -57,7 +57,7 @@ $ ec2spec ssh -h host1 host2 host3
 I, [2018-08-12T20:54:25.814752 #64341]  INFO -- : Started: host1
 I, [2018-08-12T20:54:25.814835 #64341]  INFO -- : Started: host2
 I, [2018-08-12T20:54:25.814867 #64341]  INFO -- : Started: host3
-I, [2018-08-12T20:54:25.826113 #64341]  INFO -- : Finished: host3
+E, [2018-08-12T20:54:25.826113 #64341] ERROR -- : Connection refused: host3
 I, [2018-08-12T20:54:29.385848 #64341]  INFO -- : Finished: host1
 I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 +---------------+-------------+-------------+-------+
@@ -72,7 +72,7 @@ I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 +---------------+-------------+---------------------+
 ```
 
-The data of `host3` could not be acquired due to some error.
+The data of `host3` could not be acquired due to a connection refused error.
 
 ## As a library
 
