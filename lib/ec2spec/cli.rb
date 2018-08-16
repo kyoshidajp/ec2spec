@@ -9,6 +9,8 @@ module Ec2spec
     option 'unit'
     option 'format'
     option 'region'
+    option 'app_id'
+    option 'calc_type'
     option 'debug', type: :boolean
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -17,15 +19,14 @@ module Ec2spec
       days = options['days']
       rate = options['rate']
       unit = options['unit']
+      app_id = options['app_id']
+      calc_type = options['calc_type']
       format = options['format'] || :plain_text
       region = options['region'] || 'ap-northeast-1'
 
       Ec2spec.logger.level = Logger::DEBUG if options['debug']
       client = Ec2spec::Client.new(hosts, days, format, region)
-      if rate && unit
-        client.dollar_exchange_rate(rate)
-        client.currency_unit(unit)
-      end
+      client.prepare_price_calculator(unit, rate, calc_type, app_id) if rate && unit
       puts client.run
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
