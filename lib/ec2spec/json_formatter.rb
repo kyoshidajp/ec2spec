@@ -1,12 +1,12 @@
 require 'json'
+require 'ec2spec/hash_formatter'
 
 module Ec2spec
   module JsonFormatter
+    include Ec2spec::HashFormatter
+
     def output(results, _hosts)
-      result_hash = results.each_with_object({}) do |result, hash|
-        hash[result.host] = result.to_hash
-      end
-      result_hash.to_json
+      super.to_json
     end
   end
 end
