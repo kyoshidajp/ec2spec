@@ -11,15 +11,11 @@ module Ec2spec
 
     private
 
-    def project_dir
-      File.join(ENV['HOME'], Const::PROJECT_DIR)
-    end
-
     def mkdir_project_dir
-      return if Dir.exist?(project_dir)
+      return if Dir.exist?(Ec2spec.project_dir)
 
-      Dir.mkdir(project_dir)
-      Ec2spec.logger.debug("Created project dir: #{project_dir}")
+      Dir.mkdir(Ec2spec.project_dir)
+      Ec2spec.logger.debug("Created project dir: #{Ec2spec.project_dir}")
     end
   end
 end

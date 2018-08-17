@@ -1,6 +1,11 @@
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Ec2spec::PriceCalculator do
   describe '.prepare' do
+    before do
+      allow_any_instance_of(Money::Bank::OpenExchangeRatesBank)
+        .to receive(:update_rates).and_return(nil)
+    end
+
     it 'accepts api calc type' do
       expect(Ec2spec::PriceCalculator
         .instance.prepare('JPY', 110, 'api', 'app-id'))

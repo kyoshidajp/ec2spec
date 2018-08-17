@@ -18,12 +18,12 @@ module Ec2spec
     private
 
     def region_index_file_path
-      File.join(project_dir, REGION_INDEX_FILE_URL)
+      File.join(Ec2spec.project_dir, REGION_INDEX_FILE_URL)
     end
 
     def offer_index_file_path
       file_name = File.basename(REGION_INDEX_FILE_URL)
-      File.join(project_dir, file_name)
+      File.join(Ec2spec.project_dir, file_name)
     end
 
     def offer_index_file_json

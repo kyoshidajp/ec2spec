@@ -14,12 +14,8 @@ module Ec2spec
         Money.new(dollar_price * 100, :USD).exchange_to(currency_unit)
       end
 
-      def project_dir
-        File.join(ENV['HOME'], Const::PROJECT_DIR)
-      end
-
       def cache_file
-        File.join(project_dir, OXR_CACHE)
+        File.join(Ec2spec.project_dir, OXR_CACHE)
       end
 
       def prepare_exchange_api(app_id)
