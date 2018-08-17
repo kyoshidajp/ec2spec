@@ -7,7 +7,8 @@ Gem::Specification.new do |spec|
   spec.authors       = %w["Katsuhiko YOSHIDA"]
   spec.email         = %w[claddvd@gmail.com]
 
-  spec.description   = 'ec2spec is a simple comparison tool for Amazon EC2 Instances you can access.'
+  spec.description   = 'ec2spec is a simple comparison tool '\
+                       'for Amazon EC2 Instances you can access.'
   spec.summary       = spec.description
   spec.homepage      = 'https://github.com/kyoshidajp/ec2spec'
   spec.license       = 'MIT'
