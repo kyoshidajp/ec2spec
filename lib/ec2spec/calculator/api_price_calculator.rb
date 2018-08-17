@@ -18,16 +18,11 @@ module Ec2spec
         File.join(ENV['HOME'], Const::PROJECT_DIR)
       end
 
-      def mkdir_project_dir
-        Dir.mkdir(project_dir) unless Dir.exist?(project_dir)
-      end
-
       def cache_file
         File.join(project_dir, OXR_CACHE)
       end
 
       def prepare_exchange_api(app_id)
-        mkdir_project_dir
         prepare_money(app_id)
       end
 
