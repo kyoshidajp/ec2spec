@@ -15,9 +15,11 @@ module Ec2spec
       end
 
       def table_rows(results)
-        Ec2spec::HostResult::LABEL_WITH_METHODS
-          .each_with_object([]) do |(k, v), row|
-          row << [k].concat(results.map(&v))
+        Ec2spec::HostResult.label_with_methods
+                           .each_with_object([]) do |(k, v), row|
+          unit = PriceCalculator.instance.currency_unit
+          label = format(k, unit)
+          row << [label].concat(results.map(&v))
         end
       end
     end

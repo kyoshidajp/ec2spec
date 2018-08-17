@@ -7,7 +7,8 @@ Gem::Specification.new do |spec|
   spec.authors       = %w["Katsuhiko YOSHIDA"]
   spec.email         = %w[claddvd@gmail.com]
 
-  spec.description   = 'ec2spec is a simple comparison tool for Amazon EC2 Instances you can access.'
+  spec.description   = 'ec2spec is a simple comparison tool '\
+                       'for Amazon EC2 Instances you can access.'
   spec.summary       = spec.description
   spec.homepage      = 'https://github.com/kyoshidajp/ec2spec'
   spec.license       = 'MIT'
@@ -20,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'faraday'
+  spec.add_dependency 'money'
+  spec.add_dependency 'money-open-exchange-rates'
   spec.add_dependency 'specinfra'
   spec.add_dependency 'terminal-table'
   spec.add_dependency 'thor'

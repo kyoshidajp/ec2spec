@@ -1,0 +1,5 @@
+require 'ec2spec/formatter/json_formatter'
+require 'ec2spec/formatter/markdown_formatter'
+require 'ec2spec/formatter/plain_text_formatter'
+require 'ec2spec/formatter/hash_formatter'
+require 'ec2spec/formatter/slack_formatter'

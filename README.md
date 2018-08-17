@@ -35,23 +35,25 @@ $ ec2spec ssh -h host1 ... [options]
 ### Example
 
 ```
-$ ec2spec ssh -h host1 host2 host3
+$ ec2spec ssh -h host1 host2 host3 --rate 111 --unit JPY
 I, [2018-08-12T20:54:25.814752 #64341]  INFO -- : Started: host1
 I, [2018-08-12T20:54:25.814835 #64341]  INFO -- : Started: host2
 I, [2018-08-12T20:54:25.814867 #64341]  INFO -- : Started: host3
 E, [2018-08-12T20:54:25.826113 #64341] ERROR -- : Connection refused: host3
 I, [2018-08-12T20:54:29.385848 #64341]  INFO -- : Finished: host1
 I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
-+---------------+-------------+-------------+-------+
-|               | host1       | host2       | host3 |
-+---------------+-------------+-------------|-------+
-| instance_type |    t2.micro |  c4.2xlarge |   N/A |
-|   instance_id |  i-xxxxxxxx |  i-yyyyyyyy |   N/A |
-|          vCPU |           1 |           8 |   N/A |
-|        memory |       1 GiB |      15 GiB |   N/A |
-| price (USD/H) |      0.0152 |       0.504 |   N/A |
-| price (USD/M) |     11.3088 |     374.976 |   N/A |
-+---------------+-------------+---------------------+
++---------------+-------------+---------------------+-------+
+|               | host1       | host2               | host3 |
++---------------+-------------+---------------------|-------+
+| instance_type |    t2.micro |          c4.2xlarge |   N/A |
+|   instance_id |  i-xxxxxxxx |          i-yyyyyyyy |   N/A |
+|          vCPU |           1 |                   8 |   N/A |
+|        memory |       1 GiB |              15 GiB |   N/A |
+| price (USD/H) |      0.0152 |               0.504 |   N/A |
+| price (USD/M) |     11.3088 |             374.976 |   N/A |
+| price (JPY/H) |      1.6872 |              55.944 |   N/A |
+| price (JPY/M) |   1255.2768 |  41622.335999999996 |   N/A |
++---------------+-------------+---------------------+-------+
 ```
 
 The data of `host3` could not be acquired due to a connection refused error.
@@ -67,6 +69,21 @@ The data of `host3` could not be acquired due to a connection refused error.
               plain_text, json, hash, slack, markdown
 
 --region      Region of EC2 (default: ap-northeast-1).
+
+--unit        Currency unit.
+              with --rate.
+
+--rate        Dollar exchange rate.
+              with --unit.
+              
+--calc_type   Calculate exchange currency rate type.
+              api, manual
+              with --app_id, --unit (if app)
+                   --unit, rate (if manual)
+
+--app_id      App ID of Open Exchange Rates
+              https://openexchangerates.org/
+              with --calc_type, --unit
 
 --debug       Output logs as DEBUG level.
 ```
@@ -121,6 +138,29 @@ The data of `host3` could not be acquired due to a connection refused error.
 | price (USD/H) |      0.0152 |       0.504 |
 | price (USD/M) |     11.3088 |     374.976 |
 ```
+
+### Exchange currency rate
+
+#### Manual
+
+Output JPY as exchange rate is 1 dollar 111 yen.
+
+```
+$ ec2spec ssh -h host1 host2 --unit JPY --calc_type manual
+```
+
+#### API
+
+First, get App ID from
+https://openexchangerates.org/
+
+Output JPY with it.
+
+```
+$ ec2spec ssh -h host1 host2 --unit JPY --calc_type api --app_id xxxxxxxx
+```
+
+**Note:** Exchange rate is cached in `~/.ec2spec/oxr.json`. If you want to refresh, you have to delete it.
 
 ## As a library
 

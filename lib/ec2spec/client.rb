@@ -1,8 +1,5 @@
-require 'ec2spec/formatter/json_formatter'
-require 'ec2spec/formatter/markdown_formatter'
-require 'ec2spec/formatter/plain_text_formatter'
-require 'ec2spec/formatter/hash_formatter'
-require 'ec2spec/formatter/slack_formatter'
+require 'ec2spec/formatter'
+require 'ec2spec/price_calculator'
 
 module Ec2spec
   class UndefineFormatterError < StandardError; end
@@ -33,8 +30,13 @@ module Ec2spec
       @format = format
       @region = region
 
+      Initializer.instance.do(region)
+
       extend_formatter
-      OfferFile.instance.prepare(@region)
+    end
+
+    def prepare_price_calculator(unit, rate, calc_type, app_id = nil)
+      PriceCalculator.instance.prepare(unit, rate, calc_type, app_id)
     end
 
     def run
