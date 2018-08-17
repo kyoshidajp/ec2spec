@@ -75,6 +75,15 @@ The data of `host3` could not be acquired due to a connection refused error.
 
 --rate        Dollar exchange rate.
               with --unit.
+              
+--calc_type   Calculate exchange currency rate type.
+              api, manual
+              with --app_id, --unit (if app)
+                   --unit, rate (if manual)
+
+--app_id      App ID of Open Exchange Rates
+              https://openexchangerates.org/
+              with --calc_type, --unit
 
 --debug       Output logs as DEBUG level.
 ```
@@ -129,6 +138,29 @@ The data of `host3` could not be acquired due to a connection refused error.
 | price (USD/H) |      0.0152 |       0.504 |
 | price (USD/M) |     11.3088 |     374.976 |
 ```
+
+### Exchange currency rate
+
+#### Manual
+
+Output JPY as exchange rate is 1 dollar 111 yen.
+
+```
+$ ec2spec ssh -h host1 host2 --unit JPY --calc_type manual
+```
+
+#### API
+
+First, get App ID from
+https://openexchangerates.org/
+
+Output JPY with it.
+
+```
+$ ec2spec ssh -h host1 host2 --unit JPY --calc_type api --app_id xxxxxxxx
+```
+
+**Note:** Exchange rate is cached in `~/.ec2spec/oxr.json`. If you want to refresh, you have to delete it.
 
 ## As a library
 
