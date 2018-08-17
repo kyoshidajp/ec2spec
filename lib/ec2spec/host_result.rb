@@ -2,6 +2,7 @@ module Ec2spec
   class HostResult
     MONTH_OF_DAYS = 31
     NA_VALUE = 'N/A'
+    NUMBER_OF_DECIMAL_PLACES = 3
 
     LABEL_WITH_METHODS = {
       'instance_type' => :instance_type,
@@ -68,6 +69,7 @@ module Ec2spec
       dollar_price = Ec2spec::OfferFile.instance.price_per_unit(@instance_type)
       @price_per_currency_unit = PriceCalculator
                                  .instance.currency_unit_price(dollar_price)
+      @price_per_currency_unit.fractional.floor(NUMBER_OF_DECIMAL_PLACES).to_f
     end
 
     def price_per_month
@@ -77,7 +79,8 @@ module Ec2spec
 
     def price_per_currency_unit_month
       return NA_VALUE if @price_per_currency_unit == NA_VALUE
-      @price_per_currency_unit * 24 * @days
+      (@price_per_currency_unit * 24 * @days)
+        .fractional.floor(NUMBER_OF_DECIMAL_PLACES).to_f
     end
 
     def to_hash

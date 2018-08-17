@@ -31,7 +31,7 @@ module Ec2spec
       extend_calc
 
       raise ApiKeyError if calc_type_sym == :api && app_id.nil?
-      prepare_exchange_api(app_id) if calc_type == :api
+      prepare_exchange_api(app_id) if calc_type_sym == :api
       self
     end
 

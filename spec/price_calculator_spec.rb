@@ -1,7 +1,9 @@
+# rubocop:disable Metrics/BlockLength
 RSpec.describe Ec2spec::PriceCalculator do
   describe '.prepare' do
     it 'accepts api calc type' do
-      expect(Ec2spec::PriceCalculator.instance.prepare('JPY', 110, 'api', 'app-id'))
+      expect(Ec2spec::PriceCalculator
+        .instance.prepare('JPY', 110, 'api', 'app-id'))
         .to be_an_instance_of Ec2spec::PriceCalculator
     end
     it 'accepts manual calc type' do
@@ -42,3 +44,4 @@ RSpec.describe Ec2spec::PriceCalculator do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

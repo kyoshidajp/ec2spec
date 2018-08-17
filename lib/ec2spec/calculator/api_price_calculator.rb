@@ -11,7 +11,7 @@ module Ec2spec
       end
 
       def currency_unit_price(dollar_price)
-        Money.new(dollar_price * 100, :USD).exchange_to(currency_unit).to_f
+        Money.new(dollar_price * 100, :USD).exchange_to(currency_unit)
       end
 
       def project_dir
@@ -26,12 +26,15 @@ module Ec2spec
         File.join(project_dir, OXR_CACHE)
       end
 
-      def prepare_exchange_api(value)
+      def prepare_exchange_api(app_id)
         mkdir_project_dir
+        prepare_money(app_id)
+      end
 
+      def prepare_money(app_id)
         Money.infinite_precision = true
         oxr = Money::Bank::OpenExchangeRatesBank.new
-        oxr.app_id = value
+        oxr.app_id = app_id
         oxr.cache = cache_file
         oxr.update_rates
         Money.default_bank = oxr
