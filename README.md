@@ -1,4 +1,4 @@
-# ec2spec
+# [![](https://user-images.githubusercontent.com/3317191/44626545-42a39380-a959-11e8-96a4-de3b0ea3e96f.png)](https://github.com/kyoshidajp/ec2spec)
 
 [![Gem Version](https://badge.fury.io/rb/ec2spec.svg)](https://badge.fury.io/rb/ec2spec)
 [![Build Status](https://travis-ci.org/kyoshidajp/ec2spec.svg?branch=master)](https://travis-ci.org/kyoshidajp/ec2spec)
