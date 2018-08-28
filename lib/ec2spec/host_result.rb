@@ -90,7 +90,7 @@ module Ec2spec
     private
 
     def host_values
-      label_with_methods.each_with_object({}) do |(k, v), hash|
+      self.class.label_with_methods.each_with_object({}) do |(k, v), hash|
         unit = PriceCalculator.instance.currency_unit
         label = format(k, unit)
         hash[label] = public_send(v)
