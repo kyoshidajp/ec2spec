@@ -35,7 +35,7 @@ $ ec2spec ssh -h host1 ... [options]
 ### Example
 
 ```
-$ ec2spec ssh -h host1 host2 host3 --rate 111 --unit JPY
+$ ec2spec ssh -h host1 host2 host3
 I, [2018-08-12T20:54:25.814752 #64341]  INFO -- : Started: host1
 I, [2018-08-12T20:54:25.814835 #64341]  INFO -- : Started: host2
 I, [2018-08-12T20:54:25.814867 #64341]  INFO -- : Started: host3
@@ -51,8 +51,6 @@ I, [2018-08-12T20:54:37.560003 #64341]  INFO -- : Finished: host2
 |        memory |       1 GiB |              15 GiB |   N/A |
 | price (USD/H) |      0.0152 |               0.504 |   N/A |
 | price (USD/M) |     11.3088 |             374.976 |   N/A |
-| price (JPY/H) |      1.6872 |              55.944 |   N/A |
-| price (JPY/M) |   1255.2768 |  41622.335999999996 |   N/A |
 +---------------+-------------+---------------------+-------+
 ```
 
