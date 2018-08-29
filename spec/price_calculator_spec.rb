@@ -35,10 +35,6 @@ RSpec.describe Ec2spec::PriceCalculator do
       before { Ec2spec::PriceCalculator.instance.prepare('JPY', 110, 'manual') }
       it { is_expected.to be_truthy }
     end
-    context 'having only @currency_unit' do
-      before { Ec2spec::PriceCalculator.instance.prepare('JPY', nil, 'manual') }
-      it { is_expected.to be_falsey }
-    end
     context 'having only @dollar_exchange_rate' do
       before { Ec2spec::PriceCalculator.instance.prepare(nil, 110, 'manual') }
       it { is_expected.to be_falsey }

@@ -30,13 +30,14 @@ module Ec2spec
 
       extend_calc
 
+      Money.infinite_precision = true
       raise ApiKeyError if calc_type_sym == :api && app_id.nil?
       prepare_exchange_api(app_id) if calc_type_sym == :api
       self
     end
 
     def currency_values?
-      !(@currency_unit.nil? || @dollar_exchange_rate.nil?)
+      !@currency_unit.nil?
     end
 
     private
