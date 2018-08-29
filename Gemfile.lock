@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ec2spec (0.1.2)
+    ec2spec (0.1.3)
       faraday
       money
       money-open-exchange-rates
