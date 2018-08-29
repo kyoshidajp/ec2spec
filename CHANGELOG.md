@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.1.3
+
+### Added
+  * Add logo
+  * Support currency unit price output by API/Manual
+  * Support markdown/slack format
+
+### Changed
+  * Output error messages when connecting host error was raised
+
 ## 0.1.2
 
 ### Added
