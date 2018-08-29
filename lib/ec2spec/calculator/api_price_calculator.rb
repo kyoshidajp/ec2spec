@@ -23,7 +23,6 @@ module Ec2spec
       end
 
       def prepare_money(app_id)
-        Money.infinite_precision = true
         oxr = Money::Bank::OpenExchangeRatesBank.new
         oxr.app_id = app_id
         oxr.cache = cache_file

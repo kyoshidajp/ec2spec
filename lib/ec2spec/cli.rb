@@ -26,12 +26,18 @@ module Ec2spec
 
       Ec2spec.logger.level = Logger::DEBUG if options['debug']
       client = Ec2spec::Client.new(hosts, days, format, region)
-      if rate && unit
+      if exchange_unit?(unit, rate, app_id)
         client.prepare_price_calculator(unit, rate,
                                         calc_type, app_id)
       end
       puts client.run
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+    private
+
+    def exchange_unit?(unit, rate, app_id)
+      (rate || app_id) && unit
+    end
   end
 end
